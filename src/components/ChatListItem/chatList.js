@@ -1,18 +1,32 @@
 import { View, Text, Image, StyleSheet} from 'react-native'
 import React from 'react'
+import dayjs from 'dayjs'
+import relativeTime from "dayjs/plugin/relativeTime"
+dayjs.extend(relativeTime);
 
-const ChatList = () => {
+const ChatList = ({chat}) => {
+    //console.log({uri: chat.user.image});
+    //console.log(chat.user.image);
   return (
     <View style={styles.container}>
-        <Image source={require('C:/development/ChatWave/chatwave/assets/me.jpg')} 
+        {/* for local */}
+        {/* <Image source={chat.user.image} */}
+        {/* for internet */}
+        <Image source={{uri: chat.user.image}} 
         style={styles.Image}></Image>
     <View style={styles.content}>
         <View style={styles.row}>
-            <Text numberOfLines={1} style={styles.name}>User Name</Text>
-            <Text style={styles.subTitle}>8:30</Text>
+            <Text numberOfLines={1} style={styles.name}>
+                {chat.user.name}
+            </Text>
+            <Text style={styles.subTitle}>
+            {dayjs(chat.lastMessage.createdAt).fromNow(true)}
+            </Text>
         </View>
 
-        <Text numberOfLines={2} style={styles.subTitle}>Hello Text</Text>
+        <Text numberOfLines={2} style={styles.subTitle}>
+            {chat.lastMessage.text}f
+        </Text>
     </View>
     
 
@@ -21,7 +35,7 @@ const ChatList = () => {
   )
 }
 
-export default ChatList
+export default ChatList;
 
 const styles = StyleSheet.create({
     container:{
