@@ -9,6 +9,7 @@ const ChatsScreen = () => {
     data={chats} renderItem={({item}) => <ChatList chat={item}/>}
     style={styles.container}
     />
+   
   )
 }
 export default ChatsScreen;

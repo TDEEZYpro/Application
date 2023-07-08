@@ -30,8 +30,17 @@ container:{
   margin: 5,
   padding: 10,
   borderRadius: 20,
-  maxWidth: '80%'
+  maxWidth: '80%',
 
+  //shadows
+  shadowColor: "#000",
+  shadowOffset: {
+	width: 0,
+	height: 1,
+  },
+  shadowOpacity: 0.22,
+  shadowRadius: 2.22,
+  elevation: 3,
 },
 time:{
   color: 'gray',

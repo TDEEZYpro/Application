@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, ImageBackground, FlatList} from 'react-native'
 import React from 'react'
 
+
 import bg from '../../assets/images/BG.png'
 import Message from '../components/Message'
 import messages from '../../assets/data/messages.json'
+import InputBox from '../components/inputBox'
 
 const ChatingScreen = () => {
   return (
@@ -14,6 +16,7 @@ const ChatingScreen = () => {
       style={styles.list} 
     inverted
     />
+     <InputBox/>
     </ImageBackground>
   )
 }
