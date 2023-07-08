@@ -10,7 +10,7 @@ const LoginScreen = () => {
   };
 
   const handleLogin = () => {
-    navigation.navigate('Chat');
+    navigation.navigate('Chats');
   }
 
   return (

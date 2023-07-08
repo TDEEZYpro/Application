@@ -25,7 +25,7 @@ const ChatList = ({chat}) => {
         </View>
 
         <Text numberOfLines={2} style={styles.subTitle}>
-            {chat.lastMessage.text}f
+            {chat.lastMessage.text}  
         </Text>
     </View>
     
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     name:{
         fontSize: 15,
         flex: 1,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        //color: 'white'
     },
     subTitle:{
         color: 'gray'
