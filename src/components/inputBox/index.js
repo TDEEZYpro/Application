@@ -21,7 +21,7 @@ const InputBox = () => {
         {/* text input */}
         <TextInput value={newMessage} onChangeText={setNewMessage}
          style={styles.input} placeholder='type your message...'
-         multiline
+         multiline 
          />
 
         {/* send icon */}
