@@ -15,16 +15,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tdeezy.chatwave"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/chatwaveIcon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tdeezy.chatwave"
     },
     "web": {
       "favicon": "./assets/images/chatwave.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "45080301-bd1c-4177-bffd-087b394a9707"
+      }
     }
   }
 }
