@@ -3,15 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator  from './navigation/appNavigation';
 import ChatingScreen from './src/screens/ChatingScreen';
-
+import AuthenticatedUserProvider from './src/auth/AuthenticatedUserProvider';
 
 
 export default function App() {
   return (
-      // <AppNavigator />
-      <View style={styles.container}>
-        <ChatingScreen />
-        <StatusBar style="auto"/>
+    <View style={styles.container}>
+      <AppNavigator />
       </View>
   );
 }
@@ -21,7 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
-
-    paddingVertical:30,    
+    backgroundColor:'whitesmoke'
   },
 });
