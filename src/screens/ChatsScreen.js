@@ -1,22 +1,48 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native'
-import React from 'react'
-import ChatList from '../components/ChatListItem/chatList'
-import chats from '../../assets/data/chats.json'
+import React, { useState, useEffect } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import ChatList from '../components/ChatListItem/chatList';
+import { collection, getDocs } from 'firebase/firestore';
+import { authentication, db } from '../firebase/firebase-config';
 
-const ChatsScreen = () => {
+const ChatsScreen = ({ navigation }) => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const loggedInUser = authentication.currentUser.uid;
+        const querySnapshot = await getDocs(collection(db, 'chatRooms'));
+
+        // Access the data and filter based on usersID
+        const filteredData = querySnapshot.docs.map((doc) => {
+          const ChatsData = doc.data();
+          if (ChatsData.usersID && ChatsData.usersID.includes(loggedInUser)) {
+            return ChatsData;
+          }
+          return null;
+        }).filter((ChatsData) => ChatsData !== null);
+
+        setUsers(filteredData); // Update the state with filtered data
+      } catch (error) {
+        console.log('Error fetching chat rooms:', error);
+      }
+    };
+
+    getUsers();
+  }, []);
   return (
     <FlatList
-    data={chats} renderItem={({item}) => <ChatList chat={item}/>}
-    style={styles.container}
+      data={users} // Use the state variable 'users' as the data source
+      renderItem={({ item }) => <ChatList chat={item} />}
+      style={styles.container}
     />
-   
-  )
-}
+  );
+};
+
 export default ChatsScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        paddingVertical:40,
-        // backgroundColor: 'black',
-    }
-})
+  container: {
+    backgroundColor: 'white',
+  },
+});
