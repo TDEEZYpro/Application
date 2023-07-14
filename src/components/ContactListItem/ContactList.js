@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection } from 'firebase/firestore';
 import { authentication, db } from '../../firebase/firebase-config';
 import { v4 as uuidv4 } from 'uuid';
+import { AsyncStorage } from 'react-native';
 
 const generateChatroomId = () => {
   const randomId = uuidv4();
@@ -13,15 +14,14 @@ const generateChatroomId = () => {
 const ContactList = ({ user, onSelectUser }) => {
   const navigation = useNavigation();
 
-  const isStatus = () => {
-    return user.status != null;
-  };
+  const isStatusAvailable = user.status !== undefined;
 
   const pressContact = async () => {
-
     try {
       const chatroomId = generateChatroomId();
-      const selectedUserId = user.uid; // Get the selected user's ID
+      const selectedUserId = user.uid; 
+      const currentUserUid = authentication.currentUser.uid; 
+
       const newChatRoomData = {
         LastMessage: '',
         Messages: [],
@@ -29,7 +29,7 @@ const ContactList = ({ user, onSelectUser }) => {
         chatRoomLastMessageID: '',
         createdAt: new Date(),
         updatedAt: new Date(),
-        usersID: [authentication.currentUser.uid, selectedUserId],
+        usersID: [currentUserUid, selectedUserId],
         id: chatroomId,
         name: user.Name,
         photoURL: user.photoURL
@@ -39,22 +39,24 @@ const ContactList = ({ user, onSelectUser }) => {
       await addDoc(chatRoomRef, newChatRoomData);
 
       console.log({ id: chatroomId });
-
-      navigation.navigate('Chat');
+      console.log(user.Status)
+      navigation.navigate('Chats', chatroomId);
     } catch (error) {
       console.error('Error creating chat room:', error);
     }
   };
+
+  const isCurrentUser = user.uid === authentication.currentUser.uid;
 
   return (
     <Pressable onPress={pressContact} style={styles.container}>
       <Image source={{ uri: user.photoURL }} style={styles.Image} />
       <View style={styles.content}>
         <Text numberOfLines={1} style={styles.name}>
-          {user.Name}
+          {isCurrentUser ? 'You' : user.Name}
         </Text>
         <Text numberOfLines={2} style={styles.status}>
-          {isStatus() ? user.Status : 'Hey there! I am using chatwave!!'}
+          {isCurrentUser ? 'Hey there! I am using chatwave!!':  user.Status}
         </Text>
       </View>
     </Pressable>

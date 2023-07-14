@@ -37,6 +37,8 @@ const ChatStack = () => {
       <Stack.Screen name="Home" component={MainTabNavigator} 
       options={{ headerShown: false }}
       />
+      <Stack.Screen name="Chats" component={ChatsScreen} 
+       />
       <Stack.Screen name="Chat" component={ChatingScreen} 
        />
       <Stack.Screen name="Contacts" component={ConstactsScreen} />

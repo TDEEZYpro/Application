@@ -16,7 +16,7 @@ const SignupScreen = () => {
 
   const navigation = useNavigation();
   const handleBack = () => {
-    navigation.navigate('Login');
+    navigation.replace('Login');
   };
 
   
@@ -64,7 +64,7 @@ const SignupScreen = () => {
       });
 
       console.log("Account created");
-      navigation.navigate('Login');
+      navigation.replace('Login');
     }).catch((error) => {
       console.log("Account not created");
       console.log(error);

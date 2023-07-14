@@ -14,7 +14,7 @@ const LoginScreen = ({navigation}) => {
   const [code, setCode] = useState();
 
   const handleSignup = () => {
-    navigation.navigate('Signup');
+    navigation.replace('Signup');
   };
 
   const handleLogin = () => {
@@ -22,7 +22,7 @@ const LoginScreen = ({navigation}) => {
     .then((userCredential)=>{
       console.log("Account LoggedIn");
       console.log(userCredential);
-      navigation.navigate('Home');
+      navigation.replace('Home');
     }
     ).catch((error) => {
       email ? alert('Please enter a valid email/password') : alert("Email/Password Not entered");
@@ -54,7 +54,7 @@ const LoginScreen = ({navigation}) => {
         setModalVisible(false);
         setModalConfirmVisible(true);
         alert('Reset completed, please login')
-        navigation.navigate('Login');
+        navigation.replace('Login');
         setModalVisible(false);
       })
       .catch((error) => {

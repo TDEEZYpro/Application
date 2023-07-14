@@ -8,27 +8,43 @@ dayjs.extend(relativeTime);
 const Message = ({ message }) => {
   const [isMe, setIsMe] = useState(false);
   const authUser = authentication.currentUser.uid;
-
+  
   useEffect(() => {
     const isMyMessage =  () => {
-     setIsMe(message?.userID === authUser);
+      if(authentication.currentUser.uid ){
+       return setIsMe(true);
+     }
+     return;
     };
 
     isMyMessage();
   }, [message, authUser]);
-console.log({message})
+
+  const valueCount = -1;
+
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: isMe ? 'lightblue' : 'white',
-          alignSelf: isMe ? 'flex-end' : 'flex-start',
-        },
-      ]}
-    >
-      <Text>{message}</Text>
-      <Text style={styles.time}>{dayjs(message.createdAt.toDate()).fromNow(true)}</Text>
+    <View>
+      {message[0].Messages.map((msg, index) => {
+        const isDifferentID = message[0].Messages[valueCount + 1].userID;
+        const isMe = msg.userID === authentication.currentUser.uid;
+        return (
+          <View
+            key={index}
+            style={[
+              styles.container,
+              {
+                backgroundColor: isMe ? 'lightblue' : 'white',
+                alignSelf: isMe ? 'flex-end' : 'flex-start',
+              },
+            ]}
+          >
+            <View style={styles.messageContainer}>
+              <Text>{msg.text}</Text>
+              <Text style={styles.time}>{dayjs(msg.createdAt).fromNow(true)}</Text>
+            </View>
+          </View>
+        );
+      })}
     </View>
   );
 };

@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import ContactList from '../components/ContactListItem/ContactList';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/firebase-config';
 import Invite from '../components/ChatListItem/invite';
 import { useEffect } from 'react';
@@ -10,19 +10,22 @@ const ContactsScreen = () => {
   const [chatsData, setChatsData] = useState([]);
 
   const handleSelectUser = (userId) => {
-    // Perform actions with the selected user's ID
+ 
     console.log('Selected user ID:', userId);
-    // ...additional logic
+    
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'Users'));
-      const data = querySnapshot.docs.map((doc) => doc.data());
-      setChatsData(data);
-    };
+    const usersQuery = query(collection(db, 'Users'));
 
-    fetchData();
+    const unsubscribe = onSnapshot(usersQuery, (snapshot) => {
+      const data = snapshot.docs.map((doc) => doc.data());
+      setChatsData(data);
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
   return (
     <View>

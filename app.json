@@ -4,7 +4,7 @@
     "slug": "chatwave",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/chatwave.png",
+    "icon": "./assets/images/chatwave-adaptiveIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/chatwave.png",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/chatwaveIcon.png",
+        "foregroundImage": "./assets/images/chatwave-adaptiveIcon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.tdeezy.chatwave"

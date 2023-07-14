@@ -13,8 +13,8 @@ const InputBox = ({chatroom}) => {
 
   const updateField = async () => {
     try {
-                const chatRoomID = chatroom[0].id;
-                const q = query(collection(db, 'chatRooms'), where('id', '==', chatRoomID));
+                const chatRoomID = chatroom[0][0].id;
+                const q = query(collection(db, 'chatRooms'), where('id', '==',chatroom[0][0].id));
                 const querySnapshot = await getDocs(q)
 
                 if (querySnapshot.empty) {
@@ -26,29 +26,31 @@ const InputBox = ({chatroom}) => {
                 
                   // Update the document
                   await updateDoc(docRef, { 
-                    Messages: arrayUnion({ id: chatroom[0].id,
+                    Messages: arrayUnion({ id: chatroom[0][0].id,
                                             text: content,
-                                            userID: currUser,}),
+                                            userID: currUser,
+                                            createdAt:new Date()}),
                     LastMessage: content,
                     chatRoomLastMessageID: currUser,
                     updatedAt: new Date(),
                    });
-      // Access the data and filter based on chatid
-      console.log('Fields updated successfully');
-    } catch (error) {
-      console.log('Error updating field:', error);
+                   // Access the data and filter based on chatid
+                   console.log('Fields updated successfully');
+                  } catch (error) {
+                    console.log('Error updating field:', error);
+                  }
+                };
+                
+                
+                const onSend = async () => {
+                  console.log(chatroom[0][0].id);
+                  
+            if(content !== ''){
+              setContent(newMessage);
+                    await updateField();
     }
-  };
 
-
-  const onSend = async () => {
-  
-
-    if(content != ''){
-        await updateField();
-    }
-
-    console.log('Sending a new Message:', newMessage);
+    console.log('Sending a new Message:', content);
 
     setContent('');
   };
