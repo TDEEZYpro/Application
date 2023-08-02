@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -89,3 +90,98 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
 });
+=======
+import React from 'react';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { addDoc, collection } from 'firebase/firestore';
+import { authentication, db } from '../../firebase/firebase-config';
+import { v4 as uuidv4 } from 'uuid';
+import { AsyncStorage } from 'react-native';
+
+const generateChatroomId = () => {
+  const randomId = uuidv4();
+  return randomId;
+};
+
+const ContactList = ({ user, onSelectUser }) => {
+  const navigation = useNavigation();
+
+  const isStatusAvailable = user.status !== undefined;
+
+  const pressContact = async () => {
+    try {
+      const chatroomId = generateChatroomId();
+      const selectedUserId = user.uid; 
+      const currentUserUid = authentication.currentUser.uid; 
+
+      const newChatRoomData = {
+        LastMessage: '',
+        Messages: [],
+        deleted: '',
+        chatRoomLastMessageID: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        usersID: [currentUserUid, selectedUserId],
+        id: chatroomId,
+        name: user.Name,
+        photoURL: user.photoURL
+      };
+
+      const chatRoomRef = collection(db, 'chatRooms');
+      await addDoc(chatRoomRef, newChatRoomData);
+
+      console.log({ id: chatroomId });
+      console.log(user.Status)
+      navigation.navigate('Chats', chatroomId);
+    } catch (error) {
+      console.error('Error creating chat room:', error);
+    }
+  };
+
+  const isCurrentUser = user.uid === authentication.currentUser.uid;
+
+  return (
+    <Pressable onPress={pressContact} style={styles.container}>
+      <Image source={{ uri: user.photoURL }} style={styles.Image} />
+      <View style={styles.content}>
+        <Text numberOfLines={1} style={styles.name}>
+          {isCurrentUser ? 'You' : user.Name}
+        </Text>
+        <Text numberOfLines={2} style={styles.status}>
+          {isCurrentUser ? 'Hey there! I am using chatwave!!':  user.Status}
+        </Text>
+      </View>
+    </Pressable>
+  );
+};
+
+export default ContactList;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    marginVertical: 5,
+    height: 70,
+  },
+  Image: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 10,
+  },
+  name: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
+  },
+  status: {
+    color: 'gray',
+  },
+});
+>>>>>>> 97de0230d9fd02fc4461f9549053bdcc38308256
