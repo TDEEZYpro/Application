@@ -4,11 +4,7 @@
     "slug": "chatwave",
     "version": "1.0.0",
     "orientation": "portrait",
-<<<<<<< HEAD
-    "icon": "./assets/images/chatwave.png",
-=======
     "icon": "./assets/images/chatwave-adaptiveIcon.png",
->>>>>>> 97de0230d9fd02fc4461f9549053bdcc38308256
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/chatwave.png",
@@ -24,11 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-<<<<<<< HEAD
-        "foregroundImage": "./assets/images/chatwaveIcon.png",
-=======
         "foregroundImage": "./assets/images/chatwave-adaptiveIcon.png",
->>>>>>> 97de0230d9fd02fc4461f9549053bdcc38308256
         "backgroundColor": "#ffffff"
       },
       "package": "com.tdeezy.chatwave"
